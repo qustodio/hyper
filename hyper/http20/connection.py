@@ -38,6 +38,9 @@ DEFAULT_WINDOW_SIZE = 65535
 
 TRANSIENT_SSL_ERRORS = (ssl.SSL_ERROR_WANT_READ, ssl.SSL_ERROR_WANT_WRITE)
 
+DEFAULT_TIMEOUT_VALUES_TUPLE = (10, 10)
+
+
 
 class _LockedObject(object):
     """
@@ -102,7 +105,7 @@ class HTTP20Connection(object):
     def __init__(self, host, port=None, secure=None, window_manager=None,
                  enable_push=False, ssl_context=None, proxy_host=None,
                  proxy_port=None, force_proto=None, proxy_headers=None,
-                 timeout=None, **kwargs):
+                 timeout=DEFAULT_TIMEOUT_VALUES_TUPLE, **kwargs):
         """
         Creates an HTTP/2 connection to a specific server.
         """
