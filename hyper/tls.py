@@ -50,7 +50,12 @@ def wrap_socket(sock, server_hostname, ssl_context=None, force_proto=None):
         try:
             ssl.match_hostname(ssl_sock.getpeercert(), server_hostname)
         except AttributeError:
-            ssl.verify_hostname(ssl_sock, server_hostname)  # pyopenssl
+            try:
+                ssl.verify_hostname(ssl_sock, server_hostname)  # pyopenssl
+            except AttributeError:
+                from . import ssl_match_hostname
+                ssl_match_hostname.match_hostname(ssl_sock.getpeercert(), server_hostname)
+
 
     # Allow for the protocol to be forced externally.
     proto = force_proto
